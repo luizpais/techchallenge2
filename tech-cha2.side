@@ -1,0 +1,87 @@
+{
+  "id": "15759177-ee5a-4f39-98f4-1ec040c0fa88",
+  "version": "2.0",
+  "name": "tech-cha2",
+  "url": "https://sistemaswebb3-listados.b3.com.br",
+  "tests": [{
+    "id": "c71a07dc-9dab-4a9a-9ac9-921fbc363db1",
+    "name": "tech-ch2",
+    "commands": [{
+      "id": "22d9cfea-5efb-4c2e-b92c-2848f872c8c9",
+      "comment": "",
+      "command": "open",
+      "target": "/indexPage/day/IBOV?language=pt-br",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "7059d3a6-b8b8-4bd1-bcce-7b08d6b59cec",
+      "comment": "",
+      "command": "setWindowSize",
+      "target": "1936x1048",
+      "targets": [],
+      "value": ""
+    }, {
+      "id": "e56381d7-3efb-45f3-b85d-6d27f5170b02",
+      "comment": "",
+      "command": "click",
+      "target": "linkText=Download",
+      "targets": [
+        ["linkText=Download", "linkText"],
+        ["css=.primary-text > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Download')]", "xpath:link"],
+        ["xpath=//div[@id='divContainerIframeB3']/div/div/form/div[2]/div/div[2]/div/div/div/div[2]/p/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/indexPage/day/IBOV?language=pt-br')]", "xpath:href"],
+        ["xpath=//p/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Download')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "41d50c0d-a5d4-47cf-aa96-491dbed8119e",
+      "comment": "",
+      "command": "mouseOver",
+      "target": "linkText=Download",
+      "targets": [
+        ["linkText=Download", "linkText"],
+        ["css=.primary-text > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Download')]", "xpath:link"],
+        ["xpath=//div[@id='divContainerIframeB3']/div/div/form/div[2]/div/div[2]/div/div/div/div[2]/p/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/indexPage/day/IBOV?language=pt-br')]", "xpath:href"],
+        ["xpath=//p/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Download')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "45c016a0-a1f1-4d92-820a-e044cd6f6e30",
+      "comment": "",
+      "command": "mouseOut",
+      "target": "linkText=Download",
+      "targets": [
+        ["linkText=Download", "linkText"],
+        ["css=.primary-text > a", "css:finder"],
+        ["xpath=//a[contains(text(),'Download')]", "xpath:link"],
+        ["xpath=//div[@id='divContainerIframeB3']/div/div/form/div[2]/div/div[2]/div/div/div/div[2]/p/a", "xpath:idRelative"],
+        ["xpath=//a[contains(@href, '/indexPage/day/IBOV?language=pt-br')]", "xpath:href"],
+        ["xpath=//p/a", "xpath:position"],
+        ["xpath=//a[contains(.,'Download')]", "xpath:innerText"]
+      ],
+      "value": ""
+    }, {
+      "id": "941284e1-a7d5-4844-a7ab-5260748628ea",
+      "comment": "",
+      "command": "close",
+      "target": "",
+      "targets": [],
+      "value": ""
+    }]
+  }],
+  "suites": [{
+    "id": "d3df6ce3-fe29-4540-9973-20b35521ff11",
+    "name": "Default Suite",
+    "persistSession": false,
+    "parallel": false,
+    "timeout": 300,
+    "tests": ["c71a07dc-9dab-4a9a-9ac9-921fbc363db1"]
+  }],
+  "urls": ["https://sistemaswebb3-listados.b3.com.br/"],
+  "plugins": []
+}
