@@ -1,6 +1,5 @@
 import shutil
 import subprocess
-import pyarrow
 from datetime import datetime, timedelta
 
 import pandas as pd
@@ -8,7 +7,7 @@ import os
 from pathlib import Path
 
 import glob
-
+import pyarrow
 
 def get_download_path():
     # Get the home directory
@@ -75,19 +74,22 @@ if __name__ == '__main__':
     side_file_path = 'tech-cha2.side'
     download_path = get_download_path()
 
-    #run_side(side_file_path, download_path, os.getcwd())
+    # Step 1: Run the Selenium IDE script
+    run_side(side_file_path, download_path, os.getcwd())
 
+    # Step 2: Move the downloaded file to the working directory
     dest_file = move_files(
         download_path + '\\' + 'IBOVDia_' + (datetime.now() - timedelta(days=1)).strftime('%d-%m-%y') + '.csv',
         os.getcwd() + '\\' + 'workdir\\')
 
-    #sanitizar de windows 1252 para utf8
+    # Step 3: Convert the file to UTF-8 encoding
     with open(dest_file, 'r', encoding='windows-1252') as f:
         text = f.read()
 
     with open(dest_file, 'w', encoding='utf-8') as f:
         f.write(text)
 
+    # Step 4: Remove the last character if it is a semicolon
     with open(dest_file, 'r', encoding='utf-8') as file, open(dest_file + '_temp.csv', 'w',
                                                               encoding='utf-8') as temp_file:
         for line in file:
@@ -98,10 +100,10 @@ if __name__ == '__main__':
                 line = line[:-2] + '\n'
             temp_file.write(line)
 
-    # Replace the original file with the modified temporary file
+    # Replace the original file with the modified file
     os.replace(dest_file + '_temp.csv', dest_file)
 
-    # Step 3: Read the CSV file
+    # Step 5: Convert the file to Parquet
     convert_to_parquet(dest_file, os.getcwd() + '\\' + 'workdir\\')
 
     print('Done!')
