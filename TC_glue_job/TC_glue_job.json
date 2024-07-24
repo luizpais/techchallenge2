@@ -1,0 +1,41 @@
+{
+  "name" : "TC_glue_job",
+  "jobMode" : "VISUAL",
+  "description" : "",
+  "role" : "arn:aws:iam::090666675986:role/LabRole",
+  "executionProperty" : {
+    "maxConcurrentRuns" : 1
+  },
+  "command" : {
+    "name" : "glueetl",
+    "scriptLocation" : "s3://aws-glue-assets-090666675986-us-east-1/scripts/TC_glue_job.py",
+    "pythonVersion" : "3"
+  },
+  "defaultArguments" : {
+    "--enable-metrics" : "true",
+    "--enable-spark-ui" : "true",
+    "--spark-event-logs-path" : "s3://aws-glue-assets-090666675986-us-east-1/sparkHistoryLogs/",
+    "--enable-job-insights" : "false",
+    "--enable-observability-metrics" : "true",
+    "--enable-glue-datacatalog" : "true",
+    "--enable-continuous-cloudwatch-log" : "true",
+    "--job-bookmark-option" : "job-bookmark-disable",
+    "--job-language" : "python",
+    "--TempDir" : "s3://aws-glue-assets-090666675986-us-east-1/temporary/"
+  },
+  "maxRetries" : 0,
+  "allocatedCapacity" : 10,
+  "timeout" : 2880,
+  "maxCapacity" : 10.0,
+  "glueVersion" : "4.0",
+  "numberOfWorkers" : 10,
+  "workerType" : "G.1X",
+  "executionClass" : "STANDARD",
+  "codeGenConfigurationNodes" : "{\"node-1721270511786\":{\"S3ParquetSource\":{\"AdditionalOptions\":{\"EnableSamplePath\":false,\"SamplePath\":\"s3://techchallenge-2-ml1-luizpais/IBOVDia.parquet\"},\"Exclusions\":[],\"Name\":\"Amazon S3\",\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"Setor\",\"Type\":\"string\"},{\"Name\":\"Codigo\",\"Type\":\"string\"},{\"Name\":\"Acao\",\"Type\":\"string\"},{\"Name\":\"Tipo\",\"Type\":\"string\"},{\"Name\":\"Qtde_Teorica\",\"Type\":\"string\"},{\"Name\":\"Part_perc\",\"Type\":\"double\"},{\"Name\":\"Part_Acum\",\"Type\":\"double\"},{\"Name\":\"data_particao\",\"Type\":\"timestamp\"}]}],\"Paths\":[\"s3://techchallenge-2-ml1-luizpais/IBOVDia.parquet\"],\"Recurse\":true}},\"node-1721700962241\":{\"SparkSQL\":{\"Inputs\":[\"node-1721696383852\"],\"Name\":\"SQL Query\",\"OutputSchemas\":[{\"Columns\":[{\"Name\":\"data\",\"Type\":\"date\"},{\"Name\":\"setor\",\"Type\":\"string\"},{\"Name\":\"codigo\",\"Type\":\"string\"},{\"Name\":\"media_qtde_teorica\",\"Type\":\"double\"},{\"Name\":\"media_participacao\",\"Type\":\"double\"},{\"Name\":\"soma_acumulado\",\"Type\":\"double\"},{\"Name\":\"ultimo_pregao\",\"Type\":\"timestamp\"},{\"Name\":\"primeiro_pregao\",\"Type\":\"timestamp\"},{\"Name\":\"datediff(ultimo_pregao, primeiro_pregao)\",\"Type\":\"int\"}]}],\"SqlAliases\":[{\"Alias\":\"myDataSource\",\"From\":\"node-1721696383852\"}],\"SqlQuery\":\"Select current_date() data, setor, codigo, media_qtde_teorica, media_participacao, soma_acumulado,\\n    ultimo_pregao, primeiro_pregao, datediff(ultimo_pregao, primeiro_pregao )\\nfrom (select setor, codigo, avg(qtde_teorica) media_qtde_teorica, \\n    avg(participacao) media_participacao, sum(acumulado) soma_acumulado,\\n    last(data_pregao) ultimo_pregao, first(data_pregao) primeiro_pregao\\nfrom myDataSource\\ngroup by setor, codigo)\"}},\"node-1721696383852\":{\"ApplyMapping\":{\"Inputs\":[\"node-1721270511786\"],\"Mapping\":[{\"Dropped\":false,\"FromPath\":[\"Setor\"],\"FromType\":\"string\",\"ToKey\":\"Setor\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Codigo\"],\"FromType\":\"string\",\"ToKey\":\"Codigo\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Acao\"],\"FromType\":\"string\",\"ToKey\":\"Acao\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Tipo\"],\"FromType\":\"string\",\"ToKey\":\"Tipo\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Qtde_Teorica\"],\"FromType\":\"string\",\"ToKey\":\"qtde_teorica\",\"ToType\":\"string\"},{\"Dropped\":false,\"FromPath\":[\"Part_perc\"],\"FromType\":\"double\",\"ToKey\":\"participacao\",\"ToType\":\"double\"},{\"Dropped\":false,\"FromPath\":[\"Part_Acum\"],\"FromType\":\"double\",\"ToKey\":\"acumulado\",\"ToType\":\"double\"},{\"Dropped\":false,\"FromPath\":[\"data_particao\"],\"FromType\":\"timestamp\",\"ToKey\":\"data_pregao\",\"ToType\":\"timestamp\"}],\"Name\":\"Change Schema\"}},\"node-1721707619011\":{\"S3GlueParquetTarget\":{\"AutoDataQuality\":{\"IsEnabled\":false},\"Compression\":\"snappy\",\"Inputs\":[\"node-1721700962241\"],\"Name\":\"Amazon S3\",\"PartitionKeys\":[[\"data\"],[\"codigo\"]],\"Path\":\"s3://techchallenge-2-ml1-luizpais/refined/\",\"SchemaChangePolicy\":{\"Database\":\"default\",\"EnableUpdateCatalog\":true,\"Table\":\"pregoes\",\"UpdateBehavior\":\"LOG\"}}}}",
+  "sourceControlDetails" : {
+    "provider" : "GITHUB",
+    "repository" : "techchallenge2",
+    "branch" : "main",
+    "folder" : "TC_glue_job"
+  }
+}
